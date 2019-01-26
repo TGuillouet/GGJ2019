@@ -43,7 +43,7 @@ public class Interaction : MonoBehaviour
             {
                 if (!audioSource.isPlaying)
                 {
-                    audioSource.Play(0);
+                    audioSource.Play();
                 }
                 FadeIn();
             } else
