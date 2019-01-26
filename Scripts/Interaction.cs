@@ -15,6 +15,7 @@ public class Interaction : MonoBehaviour
     public Text text; // The text for the interaction
 
     private GameObject[] highlightTaggedComponents;
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -25,6 +26,9 @@ public class Interaction : MonoBehaviour
         whiteTex = new Texture2D(1, 1);
         whiteTex.SetPixel(0, 0, new Color(0, 0, 0, 0));
         whiteTex.Apply();
+
+        audioSource = GetComponent<AudioSource>();
+        print(audioSource.clip);
     }
 
     // Update is called once per frame
@@ -37,10 +41,14 @@ public class Interaction : MonoBehaviour
         {
             if (alph < 1)
             {
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play(0);
+                }
                 FadeIn();
             } else
             {
-                SceneManager.LoadScene("2dLevel"); // Load the new scene when the fade is over
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Load the new scene when the fade is over
             }
         }
 
@@ -57,6 +65,11 @@ public class Interaction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        foreach (var go in GameObject.FindGameObjectsWithTag("Interactive"))
+        {
+            text.enabled = true;
+        }
+
         foreach (var go in highlightTaggedComponents)
         {
             if (((Behaviour)go.GetComponent("Halo")).enabled)

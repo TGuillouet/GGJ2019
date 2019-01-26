@@ -9,6 +9,7 @@ public class movement : MonoBehaviour {
 	public float rotationSpeed;
 	public float maxVerticalAngle = 280;
 	public float minVerticalAngle = 80;
+    public float height = 0.6f;
 	float verticalRotation;
 	// Use this for initialization
 	void Start () {
@@ -29,6 +30,6 @@ public class movement : MonoBehaviour {
 		}
 		transform.Translate(new Vector3 (Input.GetAxis ("Horizontal"),0 , Input.GetAxis ("Vertical")) * moveSpeed,Space.Self);
 		transform.Rotate(new Vector3(0,Input.GetAxis("Horizontal2") * rotationSpeed,0),Space.World);
-		camera.localPosition = new Vector3 (0, 0, 0);
+		camera.localPosition = new Vector3 (0, height, 0);
 	}
 }

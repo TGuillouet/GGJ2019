@@ -12,7 +12,6 @@ public class MenuMenu : MonoBehaviour
 
     public void ExitClick()
     {
-        print("Here");
         Application.Quit();
     }
 }
