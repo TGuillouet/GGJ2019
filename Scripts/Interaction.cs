@@ -14,8 +14,13 @@ public class Interaction : MonoBehaviour
     public Camera camera; // the player camera
     public Text text; // The text for the interaction
 
+    private GameObject[] highlightTaggedComponents;
+
     private void Start()
     {
+        // Get the list of all components who can be examinated
+        highlightTaggedComponents = GameObject.FindGameObjectsWithTag("Highlight");
+
         // Init the black texture
         whiteTex = new Texture2D(1, 1);
         whiteTex.SetPixel(0, 0, new Color(0, 0, 0, 0));
@@ -52,7 +57,7 @@ public class Interaction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        foreach (var go in GameObject.FindGameObjectsWithTag("Highlight"))
+        foreach (var go in highlightTaggedComponents)
         {
             if (((Behaviour)go.GetComponent("Halo")).enabled)
             {
@@ -68,7 +73,7 @@ public class Interaction : MonoBehaviour
 
     private void DisableUnusedHalo()
     {
-        foreach (var go in GameObject.FindGameObjectsWithTag("Highlight"))
+        foreach (var go in highlightTaggedComponents)
         {
             Behaviour behaviour = (Behaviour)go.GetComponent("Halo");
             if (behaviour.enabled)
@@ -96,9 +101,9 @@ public class Interaction : MonoBehaviour
     // The fade transition
     void FadeIn()
     {
-        alph += Time.deltaTime * fadeSpeed;
+        alph += Time.deltaTime * fadeSpeed; // Update the alpha value
         if (alph < 0) { alph = 0f; }
-        whiteTex.SetPixel(0, 0, new Color(255, 255, 255, alph));
-        whiteTex.Apply();
+        whiteTex.SetPixel(0, 0, new Color(255, 255, 255, alph)); // Update the alpha on the texture
+        whiteTex.Apply(); // Apply the texture
     }
 }
